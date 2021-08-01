@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use function PHPUnit\Framework\isEmpty;
 
 class UserRequest extends FormRequest
@@ -34,7 +35,7 @@ class UserRequest extends FormRequest
             ],
         ];
 
-        if (!isEmpty($this->user)) {
+        if (!empty($this->user)) {
             $rules['email'][] = Rule::unique('users')->ignore($this->user->id);
         } else {
             $rules['email'][] = Rule::unique('users');

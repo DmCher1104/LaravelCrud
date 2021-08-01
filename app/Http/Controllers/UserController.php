@@ -39,7 +39,7 @@ class UserController extends Controller
     {
         User::create($request->only(['name', 'email']));
         //dd($request->all());
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->withSuccess('Created user '.$request->name);
     }
 
     /**
@@ -50,7 +50,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('show',compact('user'));
+        return view('show', compact('user'));
     }
 
     /**
@@ -69,13 +69,13 @@ class UserController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserRequest $request, User $user)
     {
-        $user->update($request->only(['name','email']));
+        $user->update($request->only(['name', 'email']));
         //dd($request->all());
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->withSuccess('Updated user '.$user->name);
     }
 
     /**
@@ -84,9 +84,9 @@ class UserController extends Controller
      * @param \App\Models\User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(User $user)
+    public function  destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->withDanger('Deleted user '.$user->name);
     }
 }
